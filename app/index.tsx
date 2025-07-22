@@ -1,6 +1,13 @@
+import { Link, Redirect } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
+  const login = true;
+
+  if (login) {
+    return <Redirect href="/(tabs)" />;
+  }
+
   return (
     <View
       style={{
@@ -9,7 +16,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>index</Text>
+      <Link href="/settings">View details</Link>
     </View>
   );
 }

@@ -4,7 +4,7 @@
     "slug": "rn_test01_expo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/testLogo.png",
     "scheme": "rntest01expo",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
