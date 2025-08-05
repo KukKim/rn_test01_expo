@@ -8,17 +8,32 @@ import {
   View,
 } from "react-native";
 import CommonButton from "../../components/button/commonButton";
-import { createUser } from "../../features/auth";
+import { createUser, signInUser, userSignOut } from "../../features/auth";
 
 export default function LoginScreen() {
   const [id, setId] = React.useState("");
   const [pwd, setPwd] = React.useState("");
 
   const onSignIn = () => {
-    console.log("signIn - ");
-    console.log(id);
-    console.log(pwd);
+    signInUser(id, pwd)
+      .then((result) => {
+        console.log("result - ", result);
+      })
+      .catch((err) => {
+        console.log("error - ", err);
+      });
+  };
+  const onSignUp = () => {
     createUser(id, pwd)
+      .then((result) => {
+        console.log("result - ", result);
+      })
+      .catch((err) => {
+        console.log("error - ", err);
+      });
+  };
+  const onSignOut = () => {
+    userSignOut()
       .then((result) => {
         console.log("result - ", result);
       })
@@ -54,6 +69,12 @@ export default function LoginScreen() {
         </View>
         <CommonButton onPress={onSignIn}>
           <Text>Login</Text>
+        </CommonButton>
+        <CommonButton onPress={onSignUp}>
+          <Text>SignUp</Text>
+        </CommonButton>
+        <CommonButton onPress={onSignOut}>
+          <Text>SignOut</Text>
         </CommonButton>
       </View>
       <View>
