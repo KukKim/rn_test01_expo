@@ -1,14 +1,19 @@
 import {
-  GoogleAuthProvider,
   // FacebookAuthProvider,
   // OAuthCredential,
   // signInWithCredential,
   createUserWithEmailAndPassword,
   getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+
+export function auth() {
+  return getAuth;
+}
 
 export function createUser(id: string, pwd: string) {
   const auth = getAuth();
@@ -45,5 +50,8 @@ export function googleSignIn() {
 }
 
 export function userSignOut() {
+  const auth = getAuth();
   return signOut(auth);
 }
+
+export const onAuth = onAuthStateChanged;

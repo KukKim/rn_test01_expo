@@ -1,3 +1,5 @@
+import CommonButton from "@/components/button/commonButton";
+import { createUser, signInUser, userSignOut } from "@/features/auth";
 import React from "react";
 import {
   Image,
@@ -7,8 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import CommonButton from "../../components/button/commonButton";
-import { createUser, signInUser, userSignOut } from "../../features/auth";
 
 export default function LoginScreen() {
   const [id, setId] = React.useState("");
@@ -16,8 +16,9 @@ export default function LoginScreen() {
 
   const onSignIn = () => {
     signInUser(id, pwd)
-      .then((result) => {
-        console.log("result - ", result);
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("Login user - ", user);
       })
       .catch((err) => {
         console.log("error - ", err);
@@ -79,13 +80,13 @@ export default function LoginScreen() {
       </View>
       <View>
         <TouchableOpacity style={styles.socialLoginBtn}>
-          <Text>Social Login</Text>
+          <Text>Google Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialLoginBtn}>
-          <Text>Social Login</Text>
+          <Text>Facebook Login</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialLoginBtn}>
-          <Text>Social Login</Text>
+          <Text>Apple Login</Text>
         </TouchableOpacity>
       </View>
     </View>
