@@ -1,8 +1,8 @@
+import { initializeFirebase } from "@/features/firebase";
 import { Stack } from "expo-router";
-import { initializeFirebae } from "../firebaseConfig";
 
 export default function RootLayout() {
-  initializeFirebae();
+  initializeFirebase();
   return (
     <Stack>
       <Stack.Screen name="index" />
