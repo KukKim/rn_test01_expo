@@ -1,12 +1,12 @@
-import { Redirect } from "expo-router";
-// import { Link, Redirect } from "expo-router";
-import { useEffect } from "react";
-// import { Text, View } from "react-native";
 import { onAuth } from "@/features/auth";
+import { useRouter } from "expo-router";
 import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { Text, View } from "react-native";
 
 export default function Index() {
-  const login = false;
+  const navigation = useRouter();
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuth(getAuth(), (user) => {
@@ -16,31 +16,33 @@ export default function Index() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
-        // ...
+        setLogin(true);
+        navigation.replace("/(tabs)");
       } else {
         // User is signed out
         // ...
+        setLogin(false);
+        navigation.replace("/login");
       }
       return () => unsubscribe();
     });
   }, [login]);
 
-  // return (
-  //   <View
-  //     style={{
-  //       flex: 1,
-  //       justifyContent: "center",
-  //       alignItems: "center",
-  //     }}
-  //   >
-  //     <Text>index</Text>
-  //     <Link href="/settings">View details</Link>
-  //   </View>
-  // );
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>index</Text>
+    </View>
+  );
 
-  if (login) {
-    return <Redirect href="/(tabs)" />;
-  } else {
-    return <Redirect href="/login" />;
-  }
+  // if (login) {
+  //   return <Redirect href="/(tabs)" />;
+  // } else {
+  //   return <Redirect href="/login" />;
+  // }
 }
