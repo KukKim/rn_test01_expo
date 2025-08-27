@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   // signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 // TODO: firebase social login (ref. https://stackoverflow.com/questions/78530296/module-firebase-auth-has-no-exported-member-signinwithpopup)
@@ -48,6 +49,19 @@ export function googleSignIn() {
   //     const credential = GoogleAuthProvider.credentialFromError(error);
   //     // ...
   //   });
+}
+
+export function updateUserInfo(newUserInfo) {
+  const auth = getAuth();
+  updateProfile(auth.currentUser, newUserInfo)
+    .then(() => {
+      // Profile updated!
+      // ...
+    })
+    .catch((error) => {
+      // An error occurred
+      // ...
+    });
 }
 
 export function userSignOut() {
