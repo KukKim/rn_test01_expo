@@ -1,27 +1,36 @@
 import CommonButton from "@/components/button/commonButton";
-import { auth, updateUserInfo } from "@/features/auth";
+import CommonImage from "@/components/image/commonImage";
+import { updateUserInfo } from "@/features/auth";
 import React from "react";
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function AboutScreen() {
-  const [userDisplayName, setUserDisplayName] = React.useState("");
-  const [userImgUrl, setUserImgUrl] = React.useState("");
-  const [newUserDisplayName, setNewUserDisplayName] = React.useState("");
-  const [newUserImgUrl, setNewUserImgUrl] = React.useState("");
+  const userInfo = useSelector((state) => state.user.info);
+  const [userDisplayName, setUserDisplayName] = React.useState(
+    userInfo?.displayName
+  );
+  const [userImgUrl, setUserImgUrl] = React.useState(userInfo?.photoURL);
+  const [newUserDisplayName, setNewUserDisplayName] = React.useState(
+    userInfo?.displayName
+  );
+  const [newUserImgUrl, setNewUserImgUrl] = React.useState(userInfo?.photoURL);
 
-  React.useEffect(() => {
-    const myAuth = auth();
-    const userInfo = myAuth().currentUser;
-    setUserDisplayName(userInfo?.displayName);
-    setUserImgUrl(userInfo?.photoURL);
-  }, []);
-
-  const onUpdateUserInfo = () => {
+  const onUpdateUserInfo = React.useCallback(() => {
+    setNewUserDisplayName("");
+    setNewUserImgUrl("");
     updateUserInfo({
       displayName: newUserDisplayName,
       photoURL: newUserImgUrl,
-    });
-  };
+    })
+      .then((newInfo) => {
+        setUserDisplayName(newInfo?.displayName);
+        setUserImgUrl(newInfo?.photoURL);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [newUserDisplayName, newUserImgUrl]);
 
   return (
     <View style={styles.container}>
@@ -40,7 +49,7 @@ export default function AboutScreen() {
         value={newUserImgUrl}
       />
       <Text>{userDisplayName}</Text>
-      <Image
+      <CommonImage
         style={styles.userImg}
         source={{
           uri: userImgUrl,

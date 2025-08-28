@@ -7,8 +7,8 @@ export const userSlice = createSlice({
     info: {},
   },
   reducers: {
-    setSignupData: (state) => {
-      state.signupData;
+    setUserInfo: (state, action) => {
+      state.info = action.payload;
     },
     loadUserInfo: (state) => {
       state.info = {};
@@ -16,6 +16,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { loadUserInfo } = userSlice.actions;
+export const { setUserInfo, loadUserInfo } = userSlice.actions;
 
 export default userSlice.reducer;

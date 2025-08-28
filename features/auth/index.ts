@@ -53,15 +53,15 @@ export function googleSignIn() {
 
 export function updateUserInfo(newUserInfo) {
   const auth = getAuth();
-  updateProfile(auth.currentUser, newUserInfo)
-    .then(() => {
-      // Profile updated!
-      // ...
-    })
-    .catch((error) => {
-      // An error occurred
-      // ...
-    });
+  return new Promise((resolve, reject) => {
+    updateProfile(auth.currentUser, newUserInfo)
+      .then(() => {
+        resolve(newUserInfo);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 export function userSignOut() {
